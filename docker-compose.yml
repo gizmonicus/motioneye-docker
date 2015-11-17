@@ -7,6 +7,6 @@ motioneye:
   ports:
     - 8765:8765
   volumes:
-    - /srv/array/local/docker/volumes/motioneye/master/conf:/etc/motioneye
-    - /srv/array/local/docker/volumes/motioneye/master/media:/var/lib/motioneye
+    - /srv/array/local/docker/volumes/motioneye/conf:/etc/motioneye
+    - /srv/array/local/docker/volumes/motioneye/media:/var/lib/motioneye
     - /etc/localtime:/etc/localtime
