@@ -1,0 +1,16 @@
+#!/bin/bash
+LOCAL_PATH=${1:-/var/lib/motioneye}
+DRIVE_PATH=${2:-/Motioneye}
+LOCKFILE=/var/run/upload2drive.lock
+
+trap "rm $LOCKFILE; exit" SIGHUP SIGINT SIGTERM
+
+if [ -f ${LOCKFILE} ]; then
+    exit 0
+else
+    touch ${LOCKFILE}
+    #rclone --config /etc/motioneye/rclone.conf sync /var/lib/motioneye/ drive:/Motioneye
+    echo "rclone --config /etc/motioneye/rclone.conf sync ${LOCAL_PATH} drive:${DRIVE_PATH}"
+    sleep 60
+    rm -f ${LOCKFILE}
+fi
