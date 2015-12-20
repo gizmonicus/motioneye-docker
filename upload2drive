@@ -9,8 +9,6 @@ if [ -f ${LOCKFILE} ]; then
     exit 0
 else
     touch ${LOCKFILE}
-    #rclone --config /etc/motioneye/rclone.conf sync /var/lib/motioneye/ drive:/Motioneye
     echo "rclone --config /etc/motioneye/rclone.conf sync ${LOCAL_PATH} drive:${DRIVE_PATH}"
-    sleep 60
     rm -f ${LOCKFILE}
 fi
