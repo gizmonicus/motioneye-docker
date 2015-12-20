@@ -2,6 +2,7 @@
 LOCAL_PATH=${1:-/var/lib/motioneye}
 DRIVE_PATH=${2:-/Motioneye}
 LOCKFILE=/var/run/upload2drive.lock
+CONF_FILE=/etc/motioneye/rclone.conf
 
 trap "rm $LOCKFILE; exit" SIGHUP SIGINT SIGTERM
 
@@ -9,6 +10,6 @@ if [ -f ${LOCKFILE} ]; then
     exit 0
 else
     touch ${LOCKFILE}
-    echo "rclone --config /etc/motioneye/rclone.conf sync ${LOCAL_PATH} drive:${DRIVE_PATH}"
+    rclone --config ${CONF_FILE} sync ${LOCAL_PATH} drive:${DRIVE_PATH}
     rm -f ${LOCKFILE}
 fi
