@@ -1,14 +1,30 @@
 #!/bin/bash
-LOCAL_PATH=${1:-/var/lib/motioneye}
+ROOT_DIRECTORY=${1:-/var/lib/motioneye}
+PUSH_LOCATION=${2:-${ROOT_DIRECTORY}/cameras}
 LOCKFILE=/var/run/upload2drive.lock
 
-trap "rm $LOCKFILE; exit" SIGHUP SIGINT SIGTERM
+# Create a lock file so two concurrent runs don't happen
+lockup(){
+    echo "Creating lockfile"
+    touch ${LOCKFILE}
+}
 
+# Delete the lockfile and exit with a response code
+cleanup(){
+    echo "Cleaning up after myself"
+    rm -f ${LOCKFILE}
+    exit ${1}
+}
+
+trap "cleanup 0" SIGHUP SIGINT SIGTERM
+
+# If a lockfile is in progress, do nothing
 if [ -f ${LOCKFILE} ]; then
     exit 0
-elif [ -d ${LOCAL_PATH}/.gd ]; then
-    touch ${LOCKFILE}
-    pushd ${LOCAL_PATH}
-    drive push -q
-    rm -f ${LOCKFILE}
+else
+    pushd ${PUSH_LOCATION} || cleanup 1
+    lockup
+    drive push -no-prompt > /var/log/upload2google
+    popd
+    cleanup 0
 fi
