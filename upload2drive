@@ -24,7 +24,7 @@ if [ -f ${LOCKFILE} ]; then
 else
     pushd ${PUSH_LOCATION} || cleanup 1
     lockup
-    drive push -no-prompt > /var/log/upload2google
+    drive push -no-prompt -ignore-conflict > /var/log/upload2google
     popd
     cleanup 0
 fi
