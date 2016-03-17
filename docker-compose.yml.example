@@ -10,3 +10,7 @@ motioneye:
     - /srv/array/local/docker/volumes/motioneye/conf:/etc/motioneye
     - /srv/array/local/docker/volumes/motioneye/media:/var/lib/motioneye
     - /etc/localtime:/etc/localtime
+  environment:
+    GCLOUD_SVC_ACCOUNT: ""
+    GCLOUD_SVC_KEY: ""
+    GCLOUD_BUCKET: ""
