@@ -1,4 +1,4 @@
 # motioneye-docker
 Docker image for motionEye
 
-Not much to say here except that it's cool.
+See upstream project here: https://github.com/ccrisan/motioneye
